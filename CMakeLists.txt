@@ -17,10 +17,12 @@ include_directories(
     include
     gl3w/include
     ${GLFW_INCLUDE_DIR}
+		src
 )
 
 
 SET(HEADER_FILES
+	src/rasterizer.h
 )
 
 add_library(gl3w

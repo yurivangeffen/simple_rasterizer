@@ -2,10 +2,13 @@
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
+#include <rasterizer.h>
+
 // --------------------------------------------------------------------------------------------------------------
 
 int main(int argc, char ** argv)
 {
+    Rasterizer* rasterizer;
     GLFWwindow* window;
     
     // Initialize the library
@@ -38,10 +41,21 @@ int main(int argc, char ** argv)
         return -1;
     }
     
+    rasterizer = new Rasterizer();
+    if(!rasterizer->Init()) {
+        fprintf(stderr, "Unable to initialize rasterizer!");
+        return -1;
+    }
+    
     // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
+        glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        
         // Render here
+        rasterizer->Rasterize();
         
         // Swap front and back buffers
         glfwSwapBuffers(window);
@@ -51,5 +65,7 @@ int main(int argc, char ** argv)
     }
     
     glfwTerminate();
+    
+    delete rasterizer;
     return 0;
 }
